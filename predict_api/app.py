@@ -1,3 +1,3 @@
 import pipelines
 
-pipelines.ieee_train_pipeline(identity_path='../data/train_identity.csv.zip', transaction_path='../data/train_transaction.csv.zip')
+pipelines.ieee_test_pipeline(identity_path='../data/test_identity.csv.zip', transaction_path='../data/test_transaction.csv.zip')
