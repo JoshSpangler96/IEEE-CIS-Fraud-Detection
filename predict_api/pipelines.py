@@ -5,7 +5,7 @@ from resources import cat_feature_encoding, feature_engineering, reduce_mem_usag
 import model
 
 
-def ieee_train_pipeline(identity_path: str, transaction_path: str) -> None:
+def ieee_train_pipeline(identity_path: str, transaction_path: str):
     """
     Data pipeline for IEEE Fraud Training Dataset
 
@@ -14,8 +14,6 @@ def ieee_train_pipeline(identity_path: str, transaction_path: str) -> None:
         path to file with identity data
     transaction_path: str
         path to file with transaction data
-
-    :return: None
     """
 
     logging.info('Starting the data analysis pipeline')
@@ -70,7 +68,8 @@ def ieee_train_pipeline(identity_path: str, transaction_path: str) -> None:
     del df
 
     # create and train model
-    model.run_lightgbm(X, y, 0.8)
+    lgb_model = model.run_lightgbm(X, y, 0.8)
+    return lgb_model
 
 
 def ieee_test_pipeline(identity_path: str, transaction_path: str) -> pd.DataFrame:
@@ -128,5 +127,7 @@ def ieee_test_pipeline(identity_path: str, transaction_path: str) -> pd.DataFram
     # handling missing data
     df.replace([np.inf, -np.inf], np.nan, inplace=True)
     df.fillna(-1, inplace=True)
+    # remove date fields
+    df.drop(['TransactionDT', 'Date'], axis=1, inplace=True)
 
     return df

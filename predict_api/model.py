@@ -4,7 +4,7 @@ from imblearn.over_sampling import SMOTE
 import joblib
 
 
-def run_lightgbm(X: pd.DataFrame, y: pd.DataFrame, split_percent: float) -> None:
+def run_lightgbm(X: pd.DataFrame, y: pd.DataFrame, split_percent: float):
     """
     Create a LightGBM model for the IEEE Fraud Dataset
 
@@ -52,3 +52,5 @@ def run_lightgbm(X: pd.DataFrame, y: pd.DataFrame, split_percent: float) -> None
     )
 
     joblib.dump(lgb_clf, '../model/lgb_model.pkl')
+
+    return lgb_clf
