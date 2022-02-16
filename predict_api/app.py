@@ -38,7 +38,6 @@ class Predict(Resource):
         return output, 200
 
 
-@app.route('/train')
 class Train(Resource):
 
     @staticmethod
