@@ -2,6 +2,7 @@ import lightgbm as lgb
 import pandas as pd
 from imblearn.over_sampling import SMOTE
 import joblib
+import logging
 
 
 def run_lightgbm(X: pd.DataFrame, y: pd.DataFrame, split_percent: float):
@@ -13,6 +14,8 @@ def run_lightgbm(X: pd.DataFrame, y: pd.DataFrame, split_percent: float):
     :param split_percent: percentage of data to be used as training (e.g. 0.80 = 80%)
     :return:
     """
+    logging.info('Starting to train model')
+
 
     # split into train and test data
     trn_idx = int(split_percent * len(X))
@@ -52,5 +55,8 @@ def run_lightgbm(X: pd.DataFrame, y: pd.DataFrame, split_percent: float):
     )
 
     joblib.dump(lgb_clf, '../model/lgb_model.pkl')
+
+    logging.info('Finished training model')
+    logging.info(str(lgb_clf))
 
     return lgb_clf

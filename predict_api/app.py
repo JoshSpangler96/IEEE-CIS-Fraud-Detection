@@ -2,6 +2,15 @@ from flask import Flask
 from flask_restful import Api, Resource, reqparse
 import pickle
 import pipelines
+import logging
+import sys
+
+logging.basicConfig(
+    format='[%(asctime)s|%(module)s.py|%(levelname)s]  %(message)s',
+    datefmt='%H:%M:%S',
+    level=logging.INFO,
+    stream=sys.stdout
+)
 
 app = Flask(__name__)
 api = Api(app)
@@ -22,8 +31,10 @@ class Predict(Resource):
             identity_path=args['identity_path'],
             transaction_path=args['transaction_path']
         )
+        logging.info('Predicting Test Data')
         output = model.predict(df)
         output = dict(enumerate(output.flatten(), 1))
+        logging.info('Finished Predicting Test Data')
         return output, 200
 
 

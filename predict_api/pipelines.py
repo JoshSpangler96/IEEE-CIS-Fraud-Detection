@@ -16,7 +16,7 @@ def ieee_train_pipeline(identity_path: str, transaction_path: str):
         path to file with transaction data
     """
 
-    logging.info('Starting the data analysis pipeline')
+    logging.info('Starting training data pipeline')
 
     # load the csv files into memmory
     identity = pd.read_csv(identity_path)
@@ -67,6 +67,9 @@ def ieee_train_pipeline(identity_path: str, transaction_path: str):
     X = reduce_mem_usage2(X)
     del df
 
+    logging.info('Finished training data pipeline')
+
+
     # create and train model
     lgb_model = model.run_lightgbm(X, y, 0.8)
     return lgb_model
@@ -85,7 +88,7 @@ def ieee_test_pipeline(identity_path: str, transaction_path: str) -> pd.DataFram
     :return: pd.DataFrame
     """
 
-    logging.info('Starting the data analysis pipeline')
+    logging.info('Starting the test data pipeline')
 
     # load the csv files into memmory
     identity = pd.read_csv(identity_path)
@@ -129,5 +132,7 @@ def ieee_test_pipeline(identity_path: str, transaction_path: str) -> pd.DataFram
     df.fillna(-1, inplace=True)
     # remove date fields
     df.drop(['TransactionDT', 'Date'], axis=1, inplace=True)
+    logging.info('Finished test data pipeline')
+
 
     return df
