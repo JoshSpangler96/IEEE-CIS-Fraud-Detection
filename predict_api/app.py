@@ -4,6 +4,7 @@ import pickle
 import pipelines
 import logging
 import sys
+import os
 
 logging.basicConfig(
     format='[%(asctime)s|%(module)s.py|%(levelname)s]  %(message)s',
@@ -14,6 +15,14 @@ logging.basicConfig(
 
 app = Flask(__name__)
 api = Api(app)
+
+
+class Description(Resource):
+
+    @staticmethod
+    @app.route('/', methods=["POST"])
+    def description():
+        return 'Flask inside Docker'
 
 
 class Predict(Resource):
@@ -55,6 +64,7 @@ class Train(Resource):
         return output, 200
 
 
+api.add_resource(Description, '/')
 api.add_resource(Predict, '/predict')
 api.add_resource(Train, '/train')
 
