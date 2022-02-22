@@ -75,7 +75,7 @@ def ieee_train_pipeline(identity_path: str, transaction_path: str):
     return lgb_model
 
 
-def ieee_test_pipeline(identity_path: str, transaction_path: str) -> pd.DataFrame:
+def ieee_test_pipeline(identity: pd.DataFrame, transaction: pd.DataFrame) -> pd.DataFrame:
     """
     Data pipeline for IEEE Fraud Test Dataset
 
@@ -89,10 +89,10 @@ def ieee_test_pipeline(identity_path: str, transaction_path: str) -> pd.DataFram
     """
 
     logging.info('Starting the test data pipeline')
-
-    # load the csv files into memmory
-    identity = pd.read_csv(identity_path)
-    transaction = pd.read_csv(transaction_path)
+    #
+    # # load the csv files into memmory
+    # identity = pd.DataFrame(pd.read_csv(identity_path))
+    # transaction = pd.DataFrame(pd.read_csv(transaction_path))
 
     # merge the testing and training data
     df = pd.merge(identity, transaction, on='TransactionID', how='left')
@@ -124,7 +124,9 @@ def ieee_test_pipeline(identity_path: str, transaction_path: str) -> pd.DataFram
 
     df = df[features_to_use]
     # add feature engineering
+    logging.info('before fe')
     df = feature_engineering(df)
+    logging.info('after fe')
     # encode categorical features
     df = cat_feature_encoding(df)
     # handling missing data
