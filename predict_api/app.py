@@ -17,15 +17,15 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def description():
-    return 'Flask inside Docker'
+def home():
+    return render_template('home.html')
 
 
 @app.route('/predict_demo', methods=["POST"])
 def predict_demo():
     model = pickle.load(open('/app/model/lgb_model.pkl', 'rb'))
-    df_id = pd.read_csv('/app/demo_data/demo_identity.csv')
-    df_tran = pd.read_csv('/app/demo_data/demo_transaction.csv')
+    df_id = pd.read_csv('/app/data/demo_identity.csv')
+    df_tran = pd.read_csv('/app/data/demo_transaction.csv')
     df = pipelines.ieee_test_pipeline(
         identity=df_id,
         transaction=df_tran
@@ -37,13 +37,13 @@ def predict_demo():
     return jsonify(output)
 
 
-@app.route('/upload')
+@app.route('/upload', methods=['GET', 'POST'])
 def upload():
     return render_template('upload.html')
 
 
-@app.route('/uploader', methods=[ 'GET', 'POST'])
-def uploader():
+@app.route('/predict', methods=['GET', 'POST'])
+def predict():
     if request.method == 'POST':
         f_id = request.files['id']
         df_id = pd.read_csv(StringIO(str(f_id.read(),'utf-8')))
@@ -60,25 +60,7 @@ def uploader():
         output = model.predict(df)
         output = dict(enumerate(output.flatten(), 1))
         logging.info('Finished Predicting Test Data')
-        return 'finished'
-
-# @app.route('/predict', methods=["POST"])
-# def predict():
-#     model = pickle.load(open('app/model/lgb_model.pkl', 'rb'))
-#     parser = reqparse.RequestParser()
-#     parser.add_argument('identity_path')
-#     parser.add_argument('transaction_path')
-#     args = parser.parse_args()
-#
-#     df = pipelines.ieee_test_pipeline(
-#         identity_path=args['identity_path'],
-#         transaction_path=args['transaction_path']
-#     )
-#     logging.info('Predicting Test Data')
-#     output = model.predict(df)
-#     output = dict(enumerate(output.flatten(), 1))
-#     logging.info('Finished Predicting Test Data')
-#     return jsonify(output)
+        return jsonify(output)
 
 
 # @app.route('/train', methods=["POST"])
