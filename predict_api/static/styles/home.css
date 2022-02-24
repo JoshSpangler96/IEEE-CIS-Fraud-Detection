@@ -1,0 +1,32 @@
+.page_wrap {
+    margin: 2em;
+}
+body.page_wrap {
+    background-color: blue;
+}
+
+div.title_block {
+    float:right;
+    width:100%;
+    -webkit-transition:width 0.2s ease;
+    transition:width 0.2s ease;
+    background: blue
+}
+h1 {
+    color:inherit;
+    font-size:56px;
+    text-align:center;
+    margin:0 auto;
+    font-weight:100;
+    letter-spacing:3px;
+    text-transform:uppercase
+}
+p {
+    color: red;
+    text-align: center;
+}
+
+#container{
+    text-align: center;
+}
+
