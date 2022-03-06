@@ -33,40 +33,8 @@ kaggle competitions download -c ieee-fraud-detection
 ```
 
 ## Usage
-Start the Flask application
+Start the Flask application using Docker
 ```commandline
-python predict_api/app.py
+docker run -p 1080:1080 ieee_fraud:1.0.2
 ```
-Create a post request to test or train model.
-```python
-import requests
-
-def test():
-    url = 'http://127.0.0.1:1080/predict'  # localhost and the defined port + endpoint
-    body = {
-        "identity_path": 'test_identity.csv.zip',
-        "transaction_path": 'test_transaction.csv.zip',
-    }
-    response = requests.post(url, data=body)
-    print(response.json())
-
-
-def train():
-    url = 'http://127.0.0.1:1080/train'  # localhost and the defined port + endpoint
-    body = {
-        "identity_path": 'train_identity.csv.zip',
-        "transaction_path": 'train_transaction.csv.zip',
-    }
-    response = requests.post(url, data=body)
-    print(response.json())
-
-
-def main():
-    train()
-    test()
-
-
-if __name__ == '__main__':
-    main()
-
-```
+Submit Transaction data and get a percent change of it being a fraudulant transaction as a result (0.5 = 50%)
