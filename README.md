@@ -34,7 +34,16 @@ kaggle competitions download -c ieee-fraud-detection
 
 ## Usage
 Start the Flask application using Docker
+\
+***Docker***
 ```commandline
+docker pull registry.hub.docker.com/jdspangler96/ieee_fraud:1.0.2
 docker run -p 1080:1080 ieee_fraud:1.0.2
 ```
-Submit Transaction data and get a percent change of it being a fraudulant transaction as a result (0.5 = 50%)
+Submit Transaction data (identity and transaction [demo data in data/demo_*]) and get a percent change of it being a fraudulant transaction as a result (0.5 = 50%)
+\
+***AWS Instance***
+```commandline
+http://ec2-34-222-94-203.us-west-2.compute.amazonaws.com:1080/
+```
+Submit Transaction data (identity and transaction [demo data in data/demo_*]) and get a percent change of it being a fraudulant transaction as a result (0.5 = 50%)
