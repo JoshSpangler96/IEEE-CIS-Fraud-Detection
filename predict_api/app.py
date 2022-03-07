@@ -21,22 +21,6 @@ def home():
     return render_template('home.html')
 
 
-@app.route('/predict_demo', methods=["POST"])
-def predict_demo():
-    model = pickle.load(open('/app/model/lgb_model.pkl', 'rb'))
-    df_id = pd.read_csv('/app/data/demo_identity.csv')
-    df_tran = pd.read_csv('/app/data/demo_transaction.csv')
-    df = pipelines.ieee_test_pipeline(
-        identity=df_id,
-        transaction=df_tran
-    )
-    logging.info('Predicting Test Data')
-    output = model.predict(df)
-    output = dict(enumerate(output.flatten(), 1))
-    logging.info('Finished Predicting Test Data')
-    return jsonify(output)
-
-
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
     return render_template('upload.html')
@@ -61,6 +45,22 @@ def predict():
         output = dict(enumerate(output.flatten(), 1))
         logging.info('Finished Predicting Test Data')
         return jsonify(output)
+
+
+# @app.route('/predict_demo', methods=["POST"])
+# def predict_demo():
+#     model = pickle.load(open('/app/model/lgb_model.pkl', 'rb'))
+#     df_id = pd.read_csv('/app/data/demo_identity.csv')
+#     df_tran = pd.read_csv('/app/data/demo_transaction.csv')
+#     df = pipelines.ieee_test_pipeline(
+#         identity=df_id,
+#         transaction=df_tran
+#     )
+#     logging.info('Predicting Test Data')
+#     output = model.predict(df)
+#     output = dict(enumerate(output.flatten(), 1))
+#     logging.info('Finished Predicting Test Data')
+#     return jsonify(output)
 
 
 # @app.route('/train', methods=["POST"])
