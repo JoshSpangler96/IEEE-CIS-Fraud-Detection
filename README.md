@@ -44,6 +44,6 @@ Submit Transaction data (identity and transaction [demo data in data/demo_*]) an
 \
 ***AWS Instance***
 ```commandline
-http://ec2-34-222-94-203.us-west-2.compute.amazonaws.com:1080/
+http://ec2-54-202-66-215.us-west-2.compute.amazonaws.com:1080/
 ```
 Submit Transaction data (identity and transaction [demo data in data/demo_*]) and get a percent change of it being a fraudulant transaction as a result (0.5 = 50%)
